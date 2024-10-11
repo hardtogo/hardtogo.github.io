@@ -1,3 +1,4 @@
+/* Full page and centered background styling */
 body, html {
     height: 100%;
     margin: 0;
@@ -16,6 +17,15 @@ body, html {
     100% { background-position: 0% 50%; }
 }
 
+/* Load custom font */
+@font-face {
+    font-family: 'Jost';
+    src: url('Jost-VariableFont_wght.ttf') format('truetype');
+    font-weight: 100 900; /* Support full weight range for the variable font */
+    font-display: swap; /* Ensures text remains visible while the font loads */
+}
+
+/* Logo container styling */
 .svg-container {
     display: flex;
     justify-content: center;
@@ -27,13 +37,31 @@ body, html {
     user-select: none; /* Prevent text selection */
 }
 
+/* Logo styling */
 .centered-svg {
     max-width: 50%;
     max-height: 50%;
-    pointer-events: none; /* Prevent interaction */
     -webkit-user-drag: none; /* Prevent dragging in webkit browsers */
+    cursor: pointer; /* Make it clear that the logo is clickable */
 }
 
+/* Hidden text container */
+.hidden-text-container {
+    display: none; /* Hidden initially */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.9); /* Slightly smaller initially */
+    opacity: 0;
+    color: #ffffff;
+    font-size: 2em; /* Increased font size */
+    text-align: center;
+    font-family: 'Jost', sans-serif; /* Use the custom Jost font */
+    font-weight: 500; /* Use the medium weight */
+    user-select: none; /* Prevent text selection */
+}
+
+/* Firework styling */
 .firework-container {
     position: absolute;
     top: 0;

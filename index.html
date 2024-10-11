@@ -6,11 +6,15 @@
     <title>Slashdream</title>
     <link rel="stylesheet" href="styles.css">
     <script src="scripts.js" defer></script>
-	<link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
+    <div class="overlay" id="overlay"></div>
     <div class="svg-container">
-        <img src="slashdream.png" class="centered-svg" draggable="false">
+        <img src="slashdream.png" class="centered-svg" id="logoImage" draggable="false">
+    </div>
+    <div class="hidden-text-container" id="hiddenTextContainer">
+        <p>Bringing dreams to life since 2022.</p>
     </div>
     <div class="firework-container" id="fireworkContainer"></div>
 </body>
