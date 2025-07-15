@@ -1,67 +1,94 @@
-/* Full page and centered background styling */
-body, html {
+/* ---------- Root variables ---------- */
+:root {
+    --timing-logo-blur: 1s;
+    --timing-text-fade: 2.5s;
+    --timing-text-out: 1.5s;
+}
+
+/* ---------- Animated background layer ---------- */
+html, body {
     height: 100%;
     margin: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;               /* behind everything */
+    background: linear-gradient(
+        135deg,
+        hsl(0   100% 50%),
+        hsl(120 100% 50%),
+        hsl(240 100% 50%),
+        hsl(0   100% 50%)
+    );
+    background-size: 400% 400%;
+    animation: hueRotate 4s linear infinite;
+    pointer-events: none;      /* let clicks reach the text */
+}
+
+@keyframes hueRotate {
+    0%   { filter: hue-rotate(0deg);   }
+    100% { filter: hue-rotate(360deg); }
+}
+
+/* ---------- Centering container ---------- */
+body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: linear-gradient(45deg, #ff0000, #00ff00, #0000ff, #ffff00, #ff00ff, #00ffff);
-    background-size: 600% 600%;
-    animation: backgroundShift 10s ease infinite;
-    overflow: hidden; /* Prevent scrollbars from appearing */
 }
 
-@keyframes backgroundShift {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/* Load custom font */
+/* ---------- Font ---------- */
 @font-face {
     font-family: 'Jost';
     src: url('Jost-VariableFont_wght.ttf') format('truetype');
-    font-weight: 100 900; /* Support full weight range for the variable font */
-    font-display: swap; /* Ensures text remains visible while the font loads */
+    font-weight: 100 900;
+    font-display: swap;
 }
 
-/* Logo container styling */
+/* ---------- Logo container ---------- */
 .svg-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
-    height: 100%;
-    z-index: 1; /* Ensure the logo stays above the fireworks */
+    width: 70%;
+    height: 70%;
+    z-index: 1;
     position: relative;
-    user-select: none; /* Prevent text selection */
+    user-select: none;
 }
 
-/* Logo styling */
+/* ---------- Logo ---------- */
 .centered-svg {
     max-width: 50%;
     max-height: 50%;
-    -webkit-user-drag: none; /* Prevent dragging in webkit browsers */
-    cursor: pointer; /* Make it clear that the logo is clickable */
+    -webkit-user-drag: none;
+    cursor: pointer;
 }
 
-/* Hidden text container */
+/* ---------- Hidden text ---------- */
 .hidden-text-container {
-    display: none; /* Hidden initially */
+    display: none;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%) scale(0.9); /* Slightly smaller initially */
+    transform: translate(-50%, -50%) scale(0.9);
     opacity: 0;
     color: #ffffff;
-    font-size: 2em; /* Increased font size */
+    font-size: 2em;
     text-align: center;
-    font-family: 'Jost', sans-serif; /* Use the custom Jost font */
-    font-weight: 500; /* Use the medium weight */
-    user-select: none; /* Prevent text selection */
+    font-family: 'Jost', sans-serif;
+    font-weight: 500;
+    user-select: none;
+    cursor: pointer;
+    z-index: 2;                /* ensure it’s above the background */
 }
 
-/* Firework styling */
+/* ---------- Fireworks ---------- */
 .firework-container {
     position: absolute;
     top: 0;
@@ -70,6 +97,7 @@ body, html {
     height: 100%;
     pointer-events: none;
     overflow: hidden;
+    z-index: 0;
 }
 
 .firework {
@@ -78,16 +106,22 @@ body, html {
     height: 5px;
     background: #fff;
     border-radius: 50%;
-    box-shadow: 0 0 10px 5px #fff; /* Add glow effect */
+    box-shadow: 0 0 10px 5px #fff;
     animation: explode 1.5s ease-out forwards, trail 1.5s ease-out forwards;
 }
 
 @keyframes explode {
-    0% { opacity: 1; transform: scale(1); }
+    0%   { opacity: 1; transform: scale(1); }
     100% { opacity: 0; transform: scale(10); }
 }
 
 @keyframes trail {
-    0% { opacity: 1; transform: translate(0, 0); }
+    0%   { opacity: 1; transform: translate(0, 0); }
     100% { opacity: 0; transform: translate(var(--x), var(--y)); }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+    body::before { animation: none; }
+    .firework { animation: none; }
 }
