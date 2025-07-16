@@ -5,7 +5,7 @@
     --timing-text-out: 1.5s;
 }
 
-/* ---------- Animated background layer ---------- */
+/* ---------- Animated, always-covering gradient ---------- */
 html, body {
     height: 100%;
     margin: 0;
@@ -16,23 +16,33 @@ html, body {
 body::before {
     content: "";
     position: fixed;
-    inset: 0;
-    z-index: -2;               /* behind everything */
-    background: linear-gradient(
-        135deg,
+    inset: -150%;            /* oversize so rotation never exposes gaps */
+    z-index: -2;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
         hsl(0   100% 50%),
+        hsl(60  100% 50%),
         hsl(120 100% 50%),
+        hsl(180 100% 50%),
         hsl(240 100% 50%),
-        hsl(0   100% 50%)
+        hsl(300 100% 50%),
+        hsl(360 100% 50%)
     );
-    background-size: 400% 400%;
-    animation: hueRotate 4s linear infinite;
-    pointer-events: none;      /* let clicks reach the text */
+    background-size: 200% 200%;
+    animation:
+        hueRotate 8s linear infinite,
+        spin 45s linear infinite;
+    pointer-events: none;
 }
 
 @keyframes hueRotate {
     0%   { filter: hue-rotate(0deg);   }
     100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes spin {
+    0%   { transform: rotate(0deg);   }
+    100% { transform: rotate(360deg); }
 }
 
 /* ---------- Centering container ---------- */
@@ -55,8 +65,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 70%;
-    height: 70%;
+    width: 100%;
+    height: 100%;
     z-index: 1;
     position: relative;
     user-select: none;
@@ -85,7 +95,7 @@ body {
     font-weight: 500;
     user-select: none;
     cursor: pointer;
-    z-index: 2;                /* ensure it’s above the background */
+    z-index: 2;
 }
 
 /* ---------- Fireworks ---------- */
