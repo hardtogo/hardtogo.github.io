@@ -58,6 +58,9 @@
         hiddenText.style.transform = 'translate(-50%, -50%) scale(1)';
     });
 
+    /* ---------- Logo right-click → disable ---------- */
+    svgImage.addEventListener('contextmenu', e => e.preventDefault());
+
     /* ---------- Text click → return to logo ---------- */
     hiddenText.addEventListener('click', async () => {
         hiddenText.style.transition = `opacity ${TIMING.textOut}ms ease, transform ${TIMING.textOut}ms ease`;
